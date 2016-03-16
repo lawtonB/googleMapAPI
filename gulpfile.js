@@ -26,7 +26,7 @@ gulp.task('serve', function(){
   browserSync.init({
     server: {
       baseDir: './',
-      index: 'weather.html'
+      index: 'map.html'
     }
   });
   gulp.watch(['js/*.js'], ['jsBuild']);
