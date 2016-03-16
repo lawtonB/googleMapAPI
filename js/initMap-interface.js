@@ -1,3 +1,5 @@
+var apiKey = require('./../.env').apiKey;
+
   exports.initMap = function(position) {
    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
    var myOptions = {
@@ -10,9 +12,18 @@
 
     new google.maps.Marker({
       map: mapObject,
-      position: userLatLng
+      position: userLatLng,
+      title: input
     });
-    console.log(mapObject);
+
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + input + '&appid=' + apiKey).then(function(response) {
+      // var temps = convertTemperature(response.main.temp);
+      console.log(response.main.temp);
+
+        $('.showWeather').html("<h2>The temperature in " + input + " is " + response.main.temp + "</br>" + "Current weather condition is " + response.weather[0].description + "</h2>");
+    }).fail(function(error) {
+      $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
+    });
 
     // Create the search box and link it to the UI element.
           var input = document.getElementById('pac-input');
@@ -29,7 +40,7 @@
           // more details for that place.
           searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
-
+            console.log(places[0].address_components[0].long_name);
             if (places.length == 0) {
               return;
             }
