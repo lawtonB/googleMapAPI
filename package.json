@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bower-files": "^3.11.3",
     "prompt": "^1.0.0"
   },
   "devDependencies": {
