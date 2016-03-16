@@ -1,14 +1,9 @@
-$light-blue : #7ec0ee;
-$green : #75B975;
 
-.box {
-  background: $light-blue;
-  border: 3px solid black;
-  padding: 40px 80px;
-  .button {
-    font-weight: bold;
-    text-align: center;
-    background: $green;
-    color: white;
-  }
-}
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #showMap {
+        height: 500px;
+      }

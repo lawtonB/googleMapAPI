@@ -1,6 +1,6 @@
 
 $(document).ready(function() {
-  $('#forecast').click(function() {
+  $('#dino').click(function() {
     //promise; .then() method is called when promise me is in fullfilled state
     $.get('http://dinoipsum.herokuapp.com/api/?format=html').then(function(response){
       $('.dinoIpsum').append("<p>" + response +"</p>");
