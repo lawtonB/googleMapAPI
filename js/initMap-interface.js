@@ -1,8 +1,10 @@
-// exports.initMap = function () {
-//    var mapDiv = document.getElementById('map');
-//    var map = new google.maps.Map(mapDiv, {
-//      center: {lat: 44.540, lng: -78.546},
-//      zoom: 8
-//    });
-//    return map;
-// };
+  exports.initMap = function() {
+    alert("hey")
+   var userLatLng = new google.maps.LatLng(-34.397, 150.644);
+   var myOptions = {
+      center: userLatLng,
+      zoom: 8,
+      };
+  var map = new google.maps.Map(document.getElementById('showMap'), myOptions);
+    return initMap; 
+  };
