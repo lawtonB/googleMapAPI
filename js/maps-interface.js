@@ -1,5 +1,5 @@
-
 var initMap = require('./../js/initMap-interface.js').initMap;
+
 
 function geolocationError(positionError) {
   alert(positionError);
