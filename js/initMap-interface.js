@@ -16,15 +16,10 @@ var apiKey = require('./../.env').apiKey;
       title: input
     });
 
-    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + input + '&appid=' + apiKey).then(function(response) {
-      // var temps = convertTemperature(response.main.temp);
-      console.log(response.main.temp);
 
-        $('.showWeather').html("<h2>The temperature in " + input + " is " + response.main.temp + "</br>" + "Current weather condition is " + response.weather[0].description + "</h2>");
-    }).fail(function(error) {
-      $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
-    });
+    var userInput;
 
+    // google maps search box
     // Create the search box and link it to the UI element.
           var input = document.getElementById('pac-input');
           var searchBox = new google.maps.places.SearchBox(input);
@@ -40,6 +35,7 @@ var apiKey = require('./../.env').apiKey;
           // more details for that place.
           searchBox.addListener('places_changed', function() {
             var places = searchBox.getPlaces();
+            userInput = places;
             console.log(places[0].address_components[0].long_name);
             if (places.length == 0) {
               return;
@@ -78,6 +74,30 @@ var apiKey = require('./../.env').apiKey;
               }
             });
             mapObject.fitBounds(bounds);
+
+            console.log("outside of search: " + userInput);
+
+            $.get('http://api.openweathermap.org/data/2.5/weather?q=' + userInput[0].address_components[0].long_name + '&appid=' + apiKey).then(function(response) {
+              // var temps = convertTemperature(response.main.temp);
+              console.log(response.main.temp);
+                var contentString = "<h2>The temperature in " + userInput[0].address_components[0].long_name + " is " + response.main.temp + "</br>" + "Current weather condition is " + response.weather[0].description + "</h2>";
+
+                var infoWindow = new google.maps.InfoWindow({
+                  content: contentString
+                })
+                markers[0].addListener('click', function() {
+                  infoWindow.open(mapObject, markers[0]);
+                });
+
+            }).fail(function(error) {
+              $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
+            });
+
+            console.log(markers[0]);
+
+
           });
+
+
           return initMap;
   };
