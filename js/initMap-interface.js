@@ -85,7 +85,15 @@ var apiKey = require('./../.env').apiKey;
                  })
               // var temps = convertTemperature(response.main.temp);
               .then(function(forecast){
-                var contentString = "<h2>The temperature in " + userInput[0].address_components[0].long_name + " is " + currentWeather.main.temp + "</br>" + "Current weather condition is " + currentWeather.weather[0].description + "</h2> + <h2> the forecast for " + forecast.city.name + "is" + forecast.list[0].dt_txt + "</h2>";
+
+                var forecasts = [];
+                forecast.list.forEach(function(index) {
+                  forecasts.push("<p>" + index.dt_txt +": </p>" + "<ul><li>" + index.main.temp + "</li></ul>");
+                });
+
+                var contentString = "<p>The temperature in " + userInput[0].address_components[0].long_name + " is " + currentWeather.main.temp + "</br>" + "Current weather condition is " + currentWeather.weather[0].description + "</p> <p> the forecast for " + forecast.city.name + " is" + "</p>" + forecasts[0] + forecasts[1] + forecasts[2] + forecasts[3] + forecasts[4];
+
+
                 console.log(JSON.stringify(forecast));
 
                 var infoWindow = new google.maps.InfoWindow({
