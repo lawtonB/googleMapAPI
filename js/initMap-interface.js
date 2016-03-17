@@ -76,24 +76,17 @@ var apiKey = require('./../.env').apiKey;
             mapObject.fitBounds(bounds);
             city = userInput[0].address_components[0].long_name;
             console.log("outside of search: " + userInput);
-
+              var currentWeather;
               $.get('http://api.openweathermap.org/data/2.5/weather?q=' + userInput[0].address_components[0].long_name + '&appid=' + apiKey)
-             .then(function(response) {
-                  console.log("response1: " +response);
+             .then(function(response1) {
+               currentWeather = response1;
+                  console.log("response1: " + response1);
                return $.get('http://api.openweathermap.org/data/2.5/forecast?q=' + userInput[0].address_components[0].long_name + '&appid=' + apiKey)
-
-
                  })
               // var temps = convertTemperature(response.main.temp);
-              .then(function(response1){
-                console.log("response2:" +response1);
-              })
-              .fail(function(error) {
-                $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
-              });
-              // var contentString = "<h2>The temperature in " + userInput[0].address_components[0].long_name + " is " + response.main.temp + "</br>" + "Current weather condition is " + response.weather[0].description + "</h2>";
-
-
+              .then(function(forecast){
+                var contentString = "<h2>The temperature in " + userInput[0].address_components[0].long_name + " is " + currentWeather.main.temp + "</br>" + "Current weather condition is " + currentWeather.weather[0].description + "</h2> + <h2> the forecast for " + forecast.city.name + "is" + forecast.list[0].dt_txt + "</h2>";
+                console.log(JSON.stringify(forecast));
 
                 var infoWindow = new google.maps.InfoWindow({
                   content: contentString
@@ -101,6 +94,15 @@ var apiKey = require('./../.env').apiKey;
                 markers[0].addListener('click', function() {
                   infoWindow.open(mapObject, markers[0]);
                 });
+              })
+              .fail(function(error) {
+                $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
+              });
+
+
+
+
+
 
 
 
