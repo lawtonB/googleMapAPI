@@ -75,8 +75,7 @@ gulp.task('bower', ['jsBower', 'cssBower']);
 gulp.task('eslint', function() {
   return gulp.src(['js/*.js'])
   .pipe(eslint())
-  .pipe(eslint.format())
-  .pipe(eslint.failOnError());
+  .pipe(eslint.format());
 });
 
 

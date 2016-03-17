@@ -1,4 +1,5 @@
 var apiKey = require('./../.env').apiKey;
+var converter = require('./../js/temperatureConverter-interface.js').converter;
 
   exports.initMap = function(position) {
    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -88,10 +89,10 @@ var apiKey = require('./../.env').apiKey;
 
                 var forecasts = [];
                 forecast.list.forEach(function(index) {
-                  forecasts.push("<p>" + index.dt_txt +": </p>" + "<ul><li>" + index.main.temp + "</li></ul>");
+                  forecasts.push("<p>" + index.dt_txt +": </p>" + "<ul><li>" + index.weather[0].description + "<br />" + converter(index.main.temp) + " F" + "</li></ul>");
                 });
 
-                var contentString = "<p>The temperature in " + userInput[0].address_components[0].long_name + " is " + currentWeather.main.temp + "</br>" + "Current weather condition is " + currentWeather.weather[0].description + "</p> <p> the forecast for " + forecast.city.name + " is" + "</p>" + forecasts[0] + forecasts[1] + forecasts[2] + forecasts[3] + forecasts[4];
+                var contentString = "<p>The temperature in " + userInput[0].address_components[0].long_name + " is " + converter(currentWeather.main.temp) + "F" + "</br>" + "Current weather condition is " + currentWeather.weather[0].description + "</p> <p> The forecast for " + forecast.city.name + " is:" + "</p>" + forecasts[0] + forecasts[1] + forecasts[2] + forecasts[3] + forecasts[4];
 
 
                 console.log(JSON.stringify(forecast));
@@ -104,15 +105,8 @@ var apiKey = require('./../.env').apiKey;
                 });
               })
               .fail(function(error) {
-                $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state
+                $('.showWeather').text(error.message); //error handling; .fail() method is called when promise enters rejected state!!!!!!!!
               });
-
-
-
-
-
-
-
 
             console.log(markers[0]);
 

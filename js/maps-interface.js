@@ -1,13 +1,14 @@
 var initMap = require('./../js/initMap-interface.js').initMap;
 
+$(document).ready(function() {
+  alert("hey, I reloaded!")
+$("#showMap").append(locateUser);
+});
 
 function geolocationError(positionError) {
   alert(positionError);
 }
 
-$(document).ready(function() {
-$("#showMap").append(locateUser);
-});
 
 function locateUser(){
   if (navigator.geolocation){
